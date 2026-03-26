@@ -36,6 +36,19 @@
             overflow-x: hidden;
         }
 
+        /* --- PARALLAX LAYER ENGINE --- */
+        .parallax-wrapper { position: relative; overflow: hidden; }
+
+        .parallax-bg {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 130%;
+            z-index: 0;
+            background-size: cover;
+            background-position: center;
+            will-change: transform;
+        }
+
         h1, h2, h3, h4, .logo { 
             font-family: var(--font-header); 
             text-transform: uppercase; 
@@ -56,16 +69,12 @@
             transform: translateY(40px);
             transition: opacity 1s var(--fluffy-ease), transform 1s var(--fluffy-ease);
         }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
         
         .delay-1 { transition-delay: 0.1s; }
         .delay-2 { transition-delay: 0.2s; }
         .delay-3 { transition-delay: 0.3s; }
 
-        /* Header */
         header {
             position: fixed;
             top: 0; width: 100%;
@@ -73,21 +82,16 @@
             transition: background 0.5s ease, backdrop-filter 0.5s ease;
             z-index: 1000;
             padding: 15px 0;
-            border-bottom: 1px solid transparent;
         }
 
         header.scrolled {
             background: rgba(8, 8, 10, 0.85);
             backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
             border-bottom: 1px solid var(--border-color);
             padding: 5px 0;
         }
 
-        nav {
-            display: flex; justify-content: space-between; align-items: center; height: 80px;
-        }
-
+        nav { display: flex; justify-content: space-between; align-items: center; height: 80px; }
         .logo { font-size: 2rem; letter-spacing: 3px; color: var(--text-main); position: relative; }
         .logo::after { content: ''; position: absolute; bottom: 1px; left: 0; width: 60%; height: 4px; background: var(--accent); transform: skewX(-15deg); }
 
@@ -105,24 +109,18 @@
         }
         .client-portal-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(234, 179, 8, 0.05); }
 
-        /* Hero */
+        /* HERO */
         #hero {
             position: relative;
             height: 100vh; display: flex; align-items: center;
-            padding-top: 80px;
-            overflow: hidden;
+            padding-top: 80px; overflow: hidden;
+            border-bottom: var(--comic-border);
         }
-        
-        .hero-bg {
-            position: absolute;
-            top: -10%; left: -5%; width: 110%; height: 120%;
-            /* TIES DIRECTLY TO YOUR SAVED IMAGE */
-            background: linear-gradient(rgba(8, 8, 10, 0.3), rgba(8, 8, 10, 0.9)), url('hero-bg.jpg') center/cover;
-            z-index: 0;
-            will-change: transform;
+        #hero .parallax-bg {
+            background: linear-gradient(rgba(8, 8, 10, 0.3), rgba(8, 8, 10, 0.8)), 
+                        url('https://i.postimg.cc/CdSDJzhw/IMG-20250908-WA0015.jpg') center/cover;
         }
-
-        .hero-content { max-width: 950px; will-change: transform; position: relative; z-index: 2; }
+        .hero-content { max-width: 950px; position: relative; z-index: 2; }
         .hero-content h1 { font-size: 6rem; line-height: 0.95; margin-bottom: 1.5rem; text-shadow: 5px 5px 0 #000; }
         .hero-content h1 span { color: var(--accent); }
         .hero-content p { font-size: 1.4rem; color: var(--text-main); margin-bottom: 3.5rem; max-width: 750px; text-shadow: 2px 2px 4px rgba(0,0,0,1); font-weight: 700; }
@@ -131,112 +129,74 @@
             display: inline-block; background: var(--accent); color: #000;
             padding: 1.3rem 3.5rem; font-family: var(--font-header); font-size: 1.2rem;
             text-transform: uppercase; letter-spacing: 2px; border: var(--comic-border); cursor: pointer; 
-            transition: all 0.3s var(--fluffy-ease);
-            position: relative; overflow: hidden; z-index: 1;
+            transition: all 0.3s var(--fluffy-ease); position: relative; overflow: hidden; z-index: 1;
             box-shadow: var(--comic-shadow);
         }
-        .btn::after {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: radial-gradient(rgba(0,0,0,0.4) 20%, transparent 20%);
-            background-size: 8px 8px; opacity: 0; transition: opacity 0.3s ease; z-index: -1;
-        }
         .btn:hover { background-color: #fff; transform: translateY(-5px) rotate(-1deg); box-shadow: var(--comic-shadow-hover); }
-        .btn:hover::after { opacity: 1; }
 
-        /* Partners */
-        #partners { padding: 5rem 0; border-bottom: 1px solid var(--border-color); background: var(--bg-surface); position: relative; z-index: 3; }
-        .section-label { text-align: center; font-size: 1rem; color: var(--text-muted); margin-bottom: 3rem; font-family: var(--font-marker); text-transform: uppercase; }
-        .partner-list { display: flex; justify-content: center; gap: 7rem; flex-wrap: wrap; }
-        .partner-list span { font-family: var(--font-header); font-size: 2rem; color: #444; transition: 0.3s var(--fluffy-ease); cursor: default; }
-        .partner-list span:hover { color: var(--accent); transform: scale(1.1) rotate(-3deg); text-shadow: 4px 4px 0 #000; }
-
-        /* Pipeline */
-        #pipeline { padding: 8rem 0; overflow: hidden; position: relative; z-index: 3; background: var(--bg-base); }
+        /* PIPELINE */
+        #pipeline { padding: 8rem 0; background: var(--bg-base); }
         .pipeline-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.5rem; margin-top: 5rem; text-align: center; }
         .pipeline-step { 
-            padding: 1.5rem 1rem; 
-            background: var(--bg-surface); 
-            border: var(--comic-border); 
-            transition: all 0.4s var(--fluffy-ease); 
-            box-shadow: var(--comic-shadow); 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
+            padding: 1.5rem 1rem; background: var(--bg-surface); border: var(--comic-border); 
+            transition: all 0.4s var(--fluffy-ease); box-shadow: var(--comic-shadow); 
+            display: flex; flex-direction: column; align-items: center; 
         }
-        .pipeline-step img { 
-            width: 100%; 
-            height: 250px; 
-            object-fit: cover; 
-            border-radius: 2px; 
-            margin-bottom: 1.5rem; 
-            border: 2px solid #000;
-        }
-        .pipeline-step h3 { font-family: var(--font-marker); font-size: 1rem; text-transform: uppercase; margin-top: auto; }
-        .pipeline-step:hover { border-color: var(--accent); background-color: #fff; color: #000; transform: translateY(-15px) rotate(1deg) scale(1.05); box-shadow: var(--comic-shadow-hover); }
+        .pipeline-step img { width: 100%; height: 250px; object-fit: cover; border: 2px solid #000; margin-bottom: 1.5rem; }
+        .pipeline-step h3 { font-family: var(--font-marker); font-size: 1rem; text-transform: uppercase; }
+        .pipeline-step:hover { border-color: var(--accent); background-color: #fff; color: #000; transform: translateY(-15px) rotate(1deg); box-shadow: var(--comic-shadow-hover); }
 
-        /* Portfolio */
-        #portfolio { padding: 10rem 0; background: var(--bg-surface); overflow: hidden; position: relative; z-index: 3; border-top: 1px solid var(--border-color); }
-        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 3rem; margin-top: 5rem; }
+        /* PORTFOLIO */
+        #portfolio { padding: 10rem 0; background: var(--bg-surface); border-top: 1px solid var(--border-color); }
+        .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; margin-top: 5rem; }
         .portfolio-item { 
             position: relative; aspect-ratio: 3/4; overflow: hidden; background: #000; 
             border: var(--comic-border); box-shadow: var(--comic-shadow);
-            transition: transform 0.6s var(--fluffy-ease), box-shadow 0.6s var(--fluffy-ease), border-color 0.6s ease;
-            cursor: pointer;
+            transition: all 0.6s var(--fluffy-ease);
         }
-        .portfolio-item:hover {
-            transform: translateY(-20px) scale(1.03) rotate(-1.5deg); 
-            box-shadow: var(--comic-shadow-hover); border-color: var(--accent);
-        }
-        .portfolio-item img { 
-            width: 100%; height: 100%; object-fit: cover; position: absolute; 
-            transition: transform 0.6s var(--fluffy-ease), clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1);
-        }
-        
-        /* THE MAGIC GRAYSCALE TRICK */
-        .sketch-art { filter: grayscale(100%) sepia(10%) contrast(150%) brightness(0.9); }
-        
-        .portfolio-item .final-color { opacity: 1; clip-path: circle(0% at 50% 50%); z-index: 2; }
+        .portfolio-item:hover { transform: translateY(-20px) scale(1.03) rotate(-1.5deg); box-shadow: var(--comic-shadow-hover); border-color: var(--accent); }
+        .portfolio-item img { width: 100%; height: 100%; object-fit: cover; position: absolute; transition: transform 0.6s var(--fluffy-ease), clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1); }
+        .sketch-art { filter: grayscale(100%) contrast(150%); }
+        .portfolio-item .final-color { clip-path: circle(0% at 50% 50%); z-index: 2; }
         .portfolio-item:hover .final-color { clip-path: circle(150% at 50% 50%); }
-        .portfolio-item:hover .sketch-art { transform: scale(1.05); }
-
-        .portfolio-details {
-            position: absolute; bottom: 0; width: 100%; padding: 2.5rem;
-            background: linear-gradient(transparent, rgba(0,0,0,0.95));
-            transform: translateY(20px); opacity: 0; transition: all 0.4s var(--fluffy-ease); z-index: 3;
-        }
+        .portfolio-details { position: absolute; bottom: 0; width: 100%; padding: 2.5rem; background: linear-gradient(transparent, rgba(0,0,0,0.95)); transform: translateY(20px); opacity: 0; transition: all 0.4s var(--fluffy-ease); z-index: 3; }
         .portfolio-item:hover .portfolio-details { transform: translateY(0); opacity: 1; }
-        .portfolio-details h3 { font-size: 1.5rem; margin-bottom: 0.3rem; text-shadow: 3px 3px 0 #000; font-family: var(--font-header); }
-        .portfolio-details p { font-size: 0.9rem; color: var(--accent); font-family: var(--font-body); font-weight: 700; }
 
-        /* Form */
-        #collaborate { padding: 10rem 0; background: var(--bg-surface); position: relative; z-index: 3; }
-        .form-box { 
-            max-width: 850px; margin: 0 auto; background: var(--bg-base); padding: 5rem; 
-            border: var(--comic-border); border-top: 10px solid var(--accent); box-shadow: var(--comic-shadow); 
+        /* DIRECTOR */
+        #director { position: relative; padding: 12rem 0; background: var(--bg-base); border-top: var(--comic-border); border-bottom: var(--comic-border); }
+        #director .parallax-bg {
+            background: linear-gradient(rgba(8, 8, 10, 0.35), rgba(8, 8, 10, 0.35)), 
+                        url('https://i.postimg.cc/CdSDJzhw/IMG-20250908-WA0015.jpg') center/cover;
         }
-        .form-box h2 { font-size: 3rem; margin-bottom: 1rem; text-shadow: 3px 3px 0 #000; }
-        .form-box > p { color: var(--text-muted); margin-bottom: 4rem; font-size: 1.1rem; }
-        
+        .director-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; position: relative; z-index: 2; }
+        .director-img { width: 100%; aspect-ratio: 1/1; background: url('https://i.postimg.cc/CdSDJzhw/IMG-20250908-WA0015.jpg') center/cover; border: var(--comic-border); box-shadow: var(--comic-shadow); transform: rotate(1.5deg); }
+        .director-text h2 { font-size: 3.5rem; margin-bottom: 1.5rem; text-shadow: 3px 3px 0 #000; }
+        .director-text p { font-size: 1.2rem; color: var(--text-main); margin-bottom: 3rem; font-weight: 500; }
+        .btn-linkedin { display: inline-block; background: transparent; border: 3px solid #0a66c2; color: #fff; padding: 1.2rem 2.5rem; font-family: var(--font-marker); font-size: 1.1rem; transition: 0.3s; box-shadow: 5px 5px 0 rgba(10, 102, 194, 0.3); }
+        .btn-linkedin:hover { background: #0a66c2; transform: translateY(-5px); box-shadow: 10px 10px 0 rgba(0,0,0,0.5); }
+        .qr-wrapper { margin-top: 2rem; display: flex; align-items: center; gap: 1.5rem; }
+        .qr-small { background: #fff; padding: 10px; border: 2px solid #000; width: 100px; height: 100px; }
+
+        /* COLLABORATE */
+        #collaborate { padding: 10rem 0; background: var(--bg-surface); }
+        .form-box { max-width: 850px; margin: 0 auto; background: var(--bg-base); padding: 5rem; border: var(--comic-border); border-top: 10px solid var(--accent); box-shadow: var(--comic-shadow); }
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-bottom: 2.5rem; }
         .form-group { margin-bottom: 2.5rem; position: relative; }
-        label { display: block; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem; font-weight: 700; font-family: var(--font-marker); }
-        
-        input, select, textarea {
-            width: 100%; padding: 1.3rem; background: var(--bg-surface); border: var(--comic-border);
-            color: var(--text-main); font-family: var(--font-body); font-size: 1rem; transition: all 0.3s var(--fluffy-ease);
-        }
-        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); transform: translateY(-4px) scale(1.01); box-shadow: 6px 6px 0 #000; background-color: #fff; color: #000; }
-        
-        /* Footer */
-        footer { padding: 4rem 0; text-align: center; border-top: 1px solid var(--border-color); font-size: 1rem; color: var(--text-muted); background: var(--bg-base); position: relative; z-index: 3; }
-        footer a { font-family: var(--font-marker); color: var(--accent); text-transform: uppercase; margin-left: 10px; }
+        label { display: block; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem; font-family: var(--font-marker); }
+        input { width: 100%; padding: 1.3rem; background: var(--bg-surface); border: var(--comic-border); color: var(--text-main); font-family: var(--font-body); transition: all 0.3s var(--fluffy-ease); }
+        input:focus { outline: none; border-color: var(--accent); transform: translateY(-4px); background-color: #fff; color: #000; box-shadow: 6px 6px 0 #000; }
 
+        footer { padding: 4rem 0; text-align: center; border-top: 1px solid var(--border-color); background: var(--bg-base); }
+
+        /* --- MOBILE REFINEMENTS (The only changes for phone) --- */
         @media (max-width: 900px) {
             .nav-links { display: none; }
-            .hero-content h1 { font-size: 3.5rem; }
-            .pipeline-grid { grid-template-columns: 1fr; }
-            .form-grid { grid-template-columns: 1fr; }
-            .form-box { padding: 2rem; }
+            .hero-content h1 { font-size: 3.2rem; line-height: 1; }
+            .hero-content p { font-size: 1.1rem; }
+            #hero { height: auto; padding: 150px 0 100px 0; }
+            .pipeline-grid, .portfolio-grid, .director-layout, .form-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .form-box { padding: 3rem 1.5rem; }
+            .director-text h2 { font-size: 2.5rem; }
         }
     </style>
 </head>
@@ -249,6 +209,7 @@
                 <ul class="nav-links">
                     <li><a href="#pipeline">Pipeline</a></li>
                     <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#director">Director</a></li>
                     <li><a href="#collaborate">Collaborate</a></li>
                     <li><a href="https://69aed5c5c2964.site123.me" class="client-portal-btn">Secure Login</a></li>
                 </ul>
@@ -256,10 +217,10 @@
         </div>
     </header>
 
-    <section id="hero">
-        <div class="hero-bg" id="heroBg"></div>
+    <section id="hero" class="parallax-wrapper">
+        <div class="parallax-bg" id="heroBg"></div>
         <div class="container">
-            <div class="hero-content reveal" id="heroContent">
+            <div class="hero-content reveal">
                 <h1>Epic <span>Storytelling</span>.<br>High-Capacity Production.</h1>
                 <p>The Premier Studio for End-to-End, Print-Ready Haredi Comic and Graphic Novel Production.</p>
                 <a href="#portfolio" class="btn">Explore The Studio</a>
@@ -267,74 +228,54 @@
         </div>
     </section>
 
-    <section id="partners">
-        <div class="container">
-            <div class="section-label reveal">Partnering with the Best</div>
-            <div class="partner-list reveal delay-1">
-                <span>Mishpacha Weekly</span>
-                <span>Zargal</span>
-                <span>Ami Magazine</span>
-            </div>
-        </div>
-    </section>
-
     <section id="pipeline">
         <div class="container">
             <h2 class="reveal" style="text-align: center; font-size: 3rem;">The Production Pipeline</h2>
-            <p class="reveal delay-1" style="text-align: center; color: var(--text-muted); margin-top: 1.5rem; max-width: 650px; margin-left: auto; margin-right: auto; font-size: 1.1rem;">End-to-end operational capacity, managing teams to deliver ready-for-print files.</p>
             <div class="pipeline-grid">
-                <div class="pipeline-step reveal delay-1">
-                    <img src="pipe1.jpg" alt="Step 1: Script & Layouts">
-                    <h3>Script & Layouts</h3>
-                </div>
-                <div class="pipeline-step reveal delay-2">
-                    <img src="pipe2.jpg" alt="Step 2: Pencils">
-                    <h3>Pencils</h3>
-                </div>
-                <div class="pipeline-step reveal delay-3">
-                    <img src="pipe3.jpg" alt="Step 3: Inks">
-                    <h3>Inks</h3>
-                </div>
-                <div class="pipeline-step reveal delay-4">
-                    <img src="pipe4.jpg" alt="Step 4: Colors & Letters">
-                    <h3>Colors & Letters</h3>
-                </div>
-                <div class="pipeline-step reveal delay-5">
-                    <img src="pipe5.jpg" alt="Step 5: Pre-Press Delivery">
-                    <h3>Pre-Press Delivery</h3>
-                </div>
+                <div class="pipeline-step reveal delay-1"><img src="https://i.postimg.cc/rzMWgKVs/IMG-20250908-WA0018.jpg"><h3>Script & Layouts</h3></div>
+                <div class="pipeline-step reveal delay-2"><img src="https://i.postimg.cc/s1sSKvjX/IMG-20250908-WA0017.jpg"><h3>Pencils</h3></div>
+                <div class="pipeline-step reveal delay-3"><img src="https://i.postimg.cc/V5mM4dYD/IMG-20250908-WA0011.jpg"><h3>Inks</h3></div>
+                <div class="pipeline-step reveal delay-4"><img src="https://i.postimg.cc/rRVrpYn4/IMG-20250908-WA0010.jpg"><h3>Colors & Letters</h3></div>
+                <div class="pipeline-step reveal delay-5"><img src="https://i.postimg.cc/rzj4HMsM/tmwnh-sl-Whats-App-2025-08-24-bs-h-21-53-25-34d36ba9.jpg"><h3>Pre-Press Delivery</h3></div>
             </div>
         </div>
     </section>
 
     <section id="portfolio">
         <div class="container">
-            <h2 class="reveal" style="font-size: 3rem; margin-bottom: 0.8rem; text-shadow: 3px 3px 0 #000;">Featured Case Studies</h2>
-            <p class="reveal delay-1" style="color: var(--text-muted); font-size: 1.1rem;">Hover to activate the Ink Blot reveal. Panels "come alive" on interaction.</p>
-            
+            <h2 class="reveal" style="font-size: 3rem; margin-bottom: 2rem;">Featured Case Studies</h2>
             <div class="portfolio-grid">
                 <div class="portfolio-item reveal delay-1">
-                    <img src="port1.jpg" alt="Sketch" class="sketch-art">
-                    <img src="port1.jpg" alt="Color" class="final-color">
-                    <div class="portfolio-details">
-                        <h3>Historical Seafaring Adventure</h3>
-                        <p>Graphic Novel | 60-Page Volume</p>
-                    </div>
+                    <img src="https://i.postimg.cc/rRVrpYnx/IMG-20250908-WA0008.jpg" class="sketch-art">
+                    <img src="https://i.postimg.cc/rRVrpYnx/IMG-20250908-WA0008.jpg" class="final-color">
+                    <div class="portfolio-details"><h3>Historical Scene</h3></div>
                 </div>
                 <div class="portfolio-item reveal delay-2">
-                    <img src="port2.jpg" alt="Sketch" class="sketch-art">
-                    <img src="port2.jpg" alt="Color" class="final-color">
-                    <div class="portfolio-details">
-                        <h3>Dramatic Historical Epic</h3>
-                        <p>Graphic Novel | 120 Pages</p>
-                    </div>
+                    <img src="https://i.postimg.cc/0KkwNHWp/IMG-20250908-WA0009.jpg" class="sketch-art">
+                    <img src="https://i.postimg.cc/0KkwNHWp/IMG-20250908-WA0009.jpg" class="final-color">
+                    <div class="portfolio-details"><h3>Character Art</h3></div>
                 </div>
                 <div class="portfolio-item reveal delay-3">
-                    <img src="port3.jpg" alt="Sketch" class="sketch-art">
-                    <img src="port3.jpg" alt="Color" class="final-color">
-                    <div class="portfolio-details">
-                        <h3>Pickle Boy Origins</h3>
-                        <p>Serialized Comic | 45 Pages</p>
+                    <img src="https://i.postimg.cc/hhcxMfDB/IMG-20250908-WA0012.jpg" class="sketch-art">
+                    <img src="https://i.postimg.cc/hhcxMfDB/IMG-20250908-WA0012.jpg" class="final-color">
+                    <div class="portfolio-details"><h3>Action Panel</h3></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="director" class="parallax-wrapper">
+        <div class="parallax-bg" id="directorBg"></div>
+        <div class="container">
+            <div class="director-layout">
+                <div class="director-img reveal"></div>
+                <div class="director-text reveal delay-1">
+                    <h2>Directed by Segalovitz</h2>
+                    <p>Managing complex, high-capacity comic visual development requires strict quality control, cultural precision, and B2B leadership. We deliver massive output without compromising the high-end standard your publication demands.</p>
+                    <a href="YOUR_LINKEDIN_URL" target="_blank" class="btn-linkedin">Connect on LinkedIn</a>
+                    <div class="qr-wrapper">
+                        <div class="qr-small"><img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=YOUR_LINKEDIN_URL" style="width:100%"></div>
+                        <span style="font-family:var(--font-marker); font-size: 0.9rem; color: var(--text-muted);">Scan to visit profile</span>
                     </div>
                 </div>
             </div>
@@ -345,7 +286,6 @@
         <div class="container">
             <div class="form-box reveal">
                 <h2>Collaborate on Your Next Vision</h2>
-                <p>We specialize in large-scale visual production. Please fill out the form below so we can understand your project's scope.</p>
                 <form id="gatekeeperForm">
                     <div class="form-grid">
                         <div class="form-group"><input type="text" required><label>Full Name</label></div>
@@ -353,54 +293,49 @@
                         <div class="form-group"><input type="email" required><label>Email Address</label></div>
                         <div class="form-group"><input type="tel" required><label>Phone Number</label></div>
                     </div>
-                    <button type="submit" class="btn" style="width:100%; font-family:var(--font-marker);">Request Consultation</button>
+                    <button type="submit" class="btn" style="width:100%;">Request Consultation</button>
                 </form>
             </div>
         </div>
     </section>
 
-    <footer>
-        <div class="container reveal">
-            <p>&copy; 2026 Studio Segalovitz. <a href="https://linkedin.com" target="_blank">LinkedIn Profile</a></p>
-        </div>
-    </footer>
+    <footer><div class="container"><p>&copy; 2026 Studio Segalovitz.</p></div></footer>
 
     <script>
-        const header = document.getElementById('main-header');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) header.classList.add('scrolled');
-            else header.classList.remove('scrolled');
-        });
-
-        const revealElements = document.querySelectorAll('.reveal');
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) entry.target.classList.add('active');
             });
-        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
-        revealElements.forEach(el => revealObserver.observe(el));
-
-        const heroBg = document.getElementById('heroBg');
-        const heroContent = document.getElementById('heroContent');
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
         window.addEventListener('scroll', () => {
-            let scrolled = window.pageYOffset;
-            if (scrolled < window.innerHeight) {
-                heroBg.style.transform = `translateY(${scrolled * 0.4}px)`;
-                heroContent.style.transform = `translateY(${scrolled * 0.15}px)`;
+            const scrolled = window.pageYOffset;
+            const header = document.getElementById('main-header');
+            if (scrolled > 50) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
+
+            const heroBg = document.getElementById('heroBg');
+            if (heroBg) heroBg.style.transform = `translateY(${scrolled * 0.2}px)`;
+
+            const directorSection = document.getElementById('director');
+            const directorBg = document.getElementById('directorBg');
+            if (directorSection && directorBg) {
+                const rect = directorSection.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    directorBg.style.transform = `translateY(${(rect.top * 0.3)}px)`;
+                }
             }
         });
 
         document.getElementById('gatekeeperForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const btn = this.querySelector('button[type="submit"]');
-            btn.innerText = "Inquiry Sent Successfully!";
+            btn.innerText = "Inquiry Sent!";
             btn.style.background = "#22c55e";
-            btn.style.color = "#fff";
             setTimeout(() => {
                 btn.innerText = "Request Consultation";
                 btn.style.background = "var(--accent)";
-                btn.style.color = "#000";
             }, 3000);
         });
     </script>
